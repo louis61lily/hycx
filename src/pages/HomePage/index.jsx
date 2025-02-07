@@ -2,6 +2,7 @@ import { Button } from "antd";
 import React from "react";
 import { $request } from "../../tools";
 import axios from "axios";
+import MapContent from "../../components/MapContent";
 
 const HomePage = () => {
   return (
@@ -22,6 +23,7 @@ const HomePage = () => {
       >
         发送请求
       </Button>
+      <MapContent></MapContent>
     </>
   );
 };
