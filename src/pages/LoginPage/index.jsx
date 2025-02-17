@@ -69,6 +69,25 @@ const LoginPage = () => {
               移除 token
             </Button>
           </div>
+          <div className="verify-btn">
+            <Button
+              onClick={async () => {
+                try {
+                  const res = await $request.post(
+                    "http://localhost:8080/verify",
+                    {
+                      mail: "1095235717@qq.com"
+                    }
+                  );
+                  console.log(res);
+                } catch (error) {
+                  console.error("请求失败", error);
+                }
+              }}
+            >
+              获取验证码
+            </Button>
+          </div>
         </div>
       </Col>
     </Row>
