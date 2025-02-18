@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 创建 Axios 实例
 const service = axios.create({
-  baseURL: "", // 替换为你的 API 基础 URL
+  baseURL: "http://localhost:8080", // 基础 URL
   timeout: 5000 // 请求超时时间
 });
 

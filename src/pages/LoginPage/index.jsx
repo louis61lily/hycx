@@ -1,11 +1,10 @@
 import React from "react";
-import { Button, Form, Input, Row, Col, Typography } from "antd";
+import { Button, Form, Input, Row, Col, Divider } from "antd";
 import "./index.scss"; // 引入自定义样式
 import { $request } from "../../tools";
 import VerifyBtn from "../../components/VerifyBtn";
 import videoFilePath from "../../static/bgcVideo.mp4";
-
-const { Title } = Typography;
+import iconImg from "../../static/hycxIcon.png";
 
 const LoginPage = () => {
   // 表单验证成功的回调函数
@@ -20,7 +19,7 @@ const LoginPage = () => {
 
   // 登录请求
   const handleLogin = async () => {
-    const res = await $request.post("http://localhost:3001/login", {
+    const res = await $request.post("/login", {
       username: "admin",
       password: "password"
     });
@@ -43,20 +42,27 @@ const LoginPage = () => {
         <source src={videoFilePath} />
       </video>
       <div className="login-box">
-        <Title className="login-title" level={3} align="center">
-          慧引出行
-        </Title>
+        <div className="hycx-icon">
+          <img src={iconImg} alt="" />
+        </div>
+        <Divider
+          style={{
+            borderColor: "rgba(45, 43, 43, 0.3)"
+          }}
+        >
+          <p className="instruction">智慧出行路径规划专家</p>
+        </Divider>
         <Form
           name="login"
+          layout="vertical"
           initialValues={{ remember: true }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="邮箱"
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
             name="username"
+            wrapperCol={{ span: 23 }}
             rules={[
               { required: true, message: "请输入邮箱!" },
               { type: "email", message: "请输入有效的邮箱地址!" }
@@ -66,14 +72,12 @@ const LoginPage = () => {
           </Form.Item>
           <Form.Item
             label="验证码"
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
             name="authCode"
             rules={[{ required: true, message: "请输入验证码!" }]}
           >
             <Row gutter={8}>
               <Col span={16}>
-                <Input.Password placeholder="请输入邮箱内的验证码" />
+                <Input placeholder="请输入邮箱内的验证码" />
               </Col>
               <Col span={8}>
                 <VerifyBtn
