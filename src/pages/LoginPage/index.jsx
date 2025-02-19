@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Row, Col, Divider } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./index.scss"; // 引入自定义样式
 import { $request } from "../../tools";
 import VerifyBtn from "../../components/VerifyBtn";
@@ -7,6 +8,8 @@ import videoFilePath from "../../static/bgcVideo.mp4";
 import iconImg from "../../static/hycxIcon.png";
 
 const LoginPage = () => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
   // 表单验证成功的回调函数
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -17,15 +20,6 @@ const LoginPage = () => {
     console.log("Failed:", errorInfo);
   };
 
-  // 登录请求
-  const handleLogin = async () => {
-    const res = await $request.post("/login", {
-      username: "admin",
-      password: "password"
-    });
-    console.log(res);
-  };
-
   // 获取验证码成功的回调函数
   const handleGetCodeSuccess = (data) => {
     console.log("获取验证码成功:", data);
@@ -34,6 +28,33 @@ const LoginPage = () => {
   // 获取验证码失败的回调函数
   const handleGetCodeError = (error) => {
     console.error("获取验证码失败:", error);
+  };
+
+  // 登录请求
+  const handleLogin = async () => {
+    try {
+      await $request.post("/login", {
+        email: form.getFieldValue("email"),
+        code: form.getFieldValue("authCode")
+      });
+      alert("登录成功!");
+      navigate("/home");
+    } catch (error) {
+      alert("登录失败!");
+      console.error("登录请求失败:", error);
+    }
+  };
+
+  // 获取邮箱值
+  const getEmail = async () => {
+    try {
+      await form.validateFields(["email"]);
+      const email = form.getFieldValue("email");
+      return email;
+    } catch (error) {
+      console.error("邮箱验证失败:", error);
+      return null;
+    }
   };
 
   return (
@@ -53,6 +74,7 @@ const LoginPage = () => {
           <p className="instruction">智慧出行路径规划专家</p>
         </Divider>
         <Form
+          form={form}
           name="login"
           layout="vertical"
           initialValues={{ remember: true }}
@@ -61,7 +83,7 @@ const LoginPage = () => {
         >
           <Form.Item
             label="邮箱"
-            name="username"
+            name="email"
             wrapperCol={{ span: 23 }}
             rules={[
               { required: true, message: "请输入邮箱!" },
@@ -81,8 +103,7 @@ const LoginPage = () => {
               </Col>
               <Col span={8}>
                 <VerifyBtn
-                  requestUrl="http://localhost:8080/verify"
-                  requestData={{ mail: "1095235717@qq.com" }}
+                  getEmail={getEmail}
                   onSuccess={handleGetCodeSuccess}
                   onError={handleGetCodeError}
                 />

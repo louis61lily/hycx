@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button } from "antd";
 import axios from "axios";
 
+const requestUrl = "http://localhost:8080/verify";
 // 验证码按钮组件
 const VerifyBtn = ({
-  requestUrl,
-  requestData,
+  getEmail,
   countdownTime = 60, // 默认倒计时时间为 60 秒
   onSuccess, // 请求成功回调函数
   onError // 请求失败回调函数
@@ -15,12 +15,16 @@ const VerifyBtn = ({
   const timerRef = useRef(null); // 定时器引用
 
   const handleClick = async () => {
-    if (!requestData?.mail) return; // 邮箱为空时不发送请求
+    const email = await getEmail();
+    console.log(email);
+    if (!email) return;
     setIsDisabled(true);
     setCountdown(countdownTime);
 
     try {
-      const response = await axios.post(requestUrl, requestData);
+      const response = await axios.post(requestUrl, {
+        mail: email
+      });
       if (onSuccess) {
         onSuccess(response.data);
       }
