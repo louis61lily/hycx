@@ -43,7 +43,10 @@
   }
 }
 
-.token-info {
-  margin-top: 16px;
-  text-align: center;
+.copyright {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(249, 250, 251, 0.5);
 }

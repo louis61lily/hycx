@@ -59,65 +59,72 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <video autoPlay loop muted className="background-video">
-        <source src={videoFilePath} />
-      </video>
-      <div className="login-box">
-        <div className="hycx-icon">
-          <img src={iconImg} alt="" />
-        </div>
-        <Divider
-          style={{
-            borderColor: "rgba(45, 43, 43, 0.3)"
-          }}
-        >
-          <p className="instruction">智慧出行路径规划专家</p>
-        </Divider>
-        <Form
-          form={form}
-          name="login"
-          layout="vertical"
-          initialValues={{ remember: true }}
-        >
-          <Form.Item
-            label="邮箱"
-            name="email"
-            wrapperCol={{ span: 23 }}
-            rules={[
-              { required: true, message: "请输入邮箱!" },
-              { type: "email", message: "请输入有效的邮箱地址!" }
-            ]}
+    <>
+      <div className="login-container">
+        <video autoPlay loop muted className="background-video">
+          <source src={videoFilePath} />
+        </video>
+        <div className="login-box">
+          <div className="hycx-icon">
+            <img src={iconImg} alt="" />
+          </div>
+          <Divider
+            style={{
+              borderColor: "rgba(45, 43, 43, 0.3)"
+            }}
           >
-            <Input placeholder="请输入您的邮箱" />
-          </Form.Item>
-          <Form.Item
-            label="验证码"
-            name="authCode"
-            rules={[{ required: true, message: "请输入验证码!" }]}
+            <p className="instruction">智慧出行路径规划专家</p>
+          </Divider>
+          <Form
+            form={form}
+            name="login"
+            layout="vertical"
+            initialValues={{ remember: true }}
           >
-            <Row gutter={8}>
-              <Col span={16}>
-                <Input placeholder="请输入邮箱内的验证码" />
-              </Col>
-              <Col span={8}>
-                <VerifyBtn getEmail={getEmail} />
-              </Col>
-            </Row>
-          </Form.Item>
-          <Form.Item>
-            <Button
-              className="login-btn"
-              type="primary"
-              onClick={handleLogin}
-              block
+            <Form.Item
+              label="邮箱"
+              name="email"
+              wrapperCol={{ span: 23 }}
+              rules={[
+                { required: true, message: "请输入邮箱!" },
+                { type: "email", message: "请输入有效的邮箱地址!" }
+              ]}
             >
-              登录
-            </Button>
-          </Form.Item>
-        </Form>
+              <Input placeholder="请输入您的邮箱" />
+            </Form.Item>
+            <Form.Item
+              label="验证码"
+              name="authCode"
+              rules={[{ required: true, message: "请输入验证码!" }]}
+            >
+              <Row gutter={8}>
+                <Col span={16}>
+                  <Input placeholder="请输入邮箱内的验证码" />
+                </Col>
+                <Col span={8}>
+                  <VerifyBtn getEmail={getEmail} />
+                </Col>
+              </Row>
+            </Form.Item>
+            <Form.Item>
+              <Button
+                className="login-btn"
+                type="primary"
+                onClick={handleLogin}
+                block
+              >
+                登录
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
       </div>
-    </div>
+      <div>
+        <p className="copyright">
+          Copyright &copy; 2025 Louis. All rights reserved.
+        </p>
+      </div>
+    </>
   );
 };
 
