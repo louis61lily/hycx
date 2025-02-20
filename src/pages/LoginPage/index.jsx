@@ -6,12 +6,15 @@ import { $request } from "../../tools";
 import VerifyBtn from "../../components/VerifyBtn";
 import videoFilePath from "../../static/bgcVideo.mp4";
 import iconImg from "../../static/hycxIcon.png";
+import { useDispatch } from "react-redux";
+import { setType } from "../../store/typeStore";
 
 // 登录页面
 const LoginPage = () => {
-  const [form] = Form.useForm();
-  const navigate = useNavigate();
-
+  const [form] = Form.useForm(); // form实例
+  const navigate = useNavigate(); // 路由导航对象
+  const dispatch = useDispatch(); // dispatch函数
+  // 登录请求处理函数
   const handleLogin = async () => {
     try {
       // 校验表单
@@ -31,6 +34,7 @@ const LoginPage = () => {
       });
       navigate("/home");
       window.sessionStorage.setItem("token", res?.token);
+      dispatch(setType(res?.type));
     } catch (error) {
       notification.error({
         message: "登录失败",

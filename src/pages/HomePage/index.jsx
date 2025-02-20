@@ -3,11 +3,13 @@ import React from "react";
 import { $request } from "../../tools";
 import axios from "axios";
 import MapContent from "../../components/MapContent";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  const type = useSelector((state) => state.type.value);
   return (
     <>
-      <h2>home</h2>
+      <h2>home - useType is {type}</h2>
       <Button
         onClick={() => {
           axios.get("http://jsonplaceholder.typicode.com/posts").then((res) => {
