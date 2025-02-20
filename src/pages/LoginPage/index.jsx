@@ -33,12 +33,13 @@ const LoginPage = () => {
   // 登录请求
   const handleLogin = async () => {
     try {
-      await $request.post("/login", {
+      const res = await $request.post("/login", {
         email: form.getFieldValue("email"),
         code: form.getFieldValue("authCode")
       });
       alert("登录成功!");
       navigate("/home");
+      window.sessionStorage.setItem("token", res?.token);
     } catch (error) {
       alert("登录失败!");
       console.error("登录请求失败:", error);

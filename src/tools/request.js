@@ -10,10 +10,10 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // 在发送请求之前做些什么，例如添加 Token
-    // const token = localStorage.getItem("token");
-    // if (token) {
-    //   config.headers["Authorization"] = `Bearer ${token}`;
-    // }
+    const token = localStorage.getItem("token") || null;
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    }
     return config;
   },
   (error) => {
