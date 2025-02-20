@@ -17,8 +17,6 @@ service.interceptors.request.use(
     return config;
   },
   (error) => {
-    // 处理请求错误
-    console.error("请求出错:", error);
     return Promise.reject(error);
   }
 );
@@ -30,7 +28,6 @@ service.interceptors.response.use(
   },
   (error) => {
     // 处理响应错误
-    console.error("响应出错:", error);
     // if (error.response) {
     //   switch (error.response.status) {
     //     case 401:

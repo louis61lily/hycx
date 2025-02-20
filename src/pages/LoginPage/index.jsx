@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input, Row, Col, Divider } from "antd";
+import { Button, Form, Input, Row, Col, Divider, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./index.scss"; // 引入自定义样式
 import { $request } from "../../tools";
@@ -7,42 +7,35 @@ import VerifyBtn from "../../components/VerifyBtn";
 import videoFilePath from "../../static/bgcVideo.mp4";
 import iconImg from "../../static/hycxIcon.png";
 
+// 登录页面
 const LoginPage = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  // 表单验证成功的回调函数
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
 
-  // 表单验证失败的回调函数
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  // 获取验证码成功的回调函数
-  const handleGetCodeSuccess = (data) => {
-    console.log("获取验证码成功:", data);
-  };
-
-  // 获取验证码失败的回调函数
-  const handleGetCodeError = (error) => {
-    console.error("获取验证码失败:", error);
-  };
-
-  // 登录请求
   const handleLogin = async () => {
+    try {
+      // 校验表单
+      await form.validateFields();
+    } catch (error) {
+      return;
+    }
+    // 登录请求
     try {
       const res = await $request.post("/login", {
         email: form.getFieldValue("email"),
         code: form.getFieldValue("authCode")
       });
-      alert("登录成功!");
+      notification.success({
+        message: "登录成功",
+        description: "欢迎使用慧引出行!"
+      });
       navigate("/home");
       window.sessionStorage.setItem("token", res?.token);
     } catch (error) {
-      alert("登录失败!");
-      console.error("登录请求失败:", error);
+      notification.error({
+        message: "登录失败",
+        description: "请检查邮箱和验证码是否正确!"
+      });
     }
   };
 
@@ -53,7 +46,10 @@ const LoginPage = () => {
       const email = form.getFieldValue("email");
       return email;
     } catch (error) {
-      console.error("邮箱验证失败:", error);
+      notification.error({
+        message: "邮箱验证失败",
+        description: "请输入有效的邮箱地址或联系管理员!"
+      });
       return null;
     }
   };
@@ -79,8 +75,6 @@ const LoginPage = () => {
           name="login"
           layout="vertical"
           initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
         >
           <Form.Item
             label="邮箱"
@@ -103,11 +97,7 @@ const LoginPage = () => {
                 <Input placeholder="请输入邮箱内的验证码" />
               </Col>
               <Col span={8}>
-                <VerifyBtn
-                  getEmail={getEmail}
-                  onSuccess={handleGetCodeSuccess}
-                  onError={handleGetCodeError}
-                />
+                <VerifyBtn getEmail={getEmail} />
               </Col>
             </Row>
           </Form.Item>

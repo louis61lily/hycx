@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import axios from "axios";
 
 const requestUrl = "http://localhost:8080/verify";
 // 验证码按钮组件
 const VerifyBtn = ({
   getEmail,
-  countdownTime = 60, // 默认倒计时时间为 60 秒
-  onSuccess, // 请求成功回调函数
-  onError // 请求失败回调函数
+  countdownTime = 60 // 默认倒计时时间为 60 秒
 }) => {
   const [isDisabled, setIsDisabled] = useState(false); // 按钮是否禁用
   const [countdown, setCountdown] = useState(0); // 倒计时
@@ -22,17 +20,19 @@ const VerifyBtn = ({
     setCountdown(countdownTime);
 
     try {
-      const response = await axios.post(requestUrl, {
+      await axios.post(requestUrl, {
         mail: email
       });
-      if (onSuccess) {
-        onSuccess(response.data);
-      }
+      notification.success({
+        message: "验证码发送成功",
+        description: "验证码1分钟内有效，请尽快查收！",
+        duration: 0
+      });
     } catch (error) {
-      console.error("请求验证码失败:", error);
-      if (onError) {
-        onError(error);
-      }
+      notification.error({
+        message: "验证码发送失败",
+        description: "请检查邮箱或联系管理员！"
+      });
       setIsDisabled(false);
       setCountdown(0);
       return;
