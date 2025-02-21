@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routes from "./routes";
 import RouteGuard from "./guard";
+import { useSelector } from "react-redux";
 
 const AppRoutes = () => {
+  const token = useSelector((state) => state.token.token);
   return (
     <Router>
       <RouteGuard>
@@ -12,7 +14,12 @@ const AppRoutes = () => {
               <Route
                 key={route._name}
                 path={route.path}
-                element={route.element}
+                // 需要token并且有token那么渲染element，否则渲染noTokenElement
+                element={
+                  route?.needToken && token
+                    ? route.element
+                    : route.noTokenElement
+                }
               />
             );
           })}

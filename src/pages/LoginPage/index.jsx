@@ -8,6 +8,7 @@ import videoFilePath from "../../static/bgcVideo.mp4";
 import iconImg from "../../static/hycxIcon.png";
 import { useDispatch } from "react-redux";
 import { setType } from "../../store/typeStore";
+import { setToken } from "../../store/tokenStore";
 
 // 登录页面
 const LoginPage = () => {
@@ -32,9 +33,9 @@ const LoginPage = () => {
         message: "登录成功",
         description: "欢迎使用慧引出行!"
       });
-      navigate("/home");
-      window.sessionStorage.setItem("token", res?.token);
       dispatch(setType(res?.type));
+      dispatch(setToken(res?.token));
+      navigate("/home");
     } catch (error) {
       notification.error({
         message: "登录失败",
