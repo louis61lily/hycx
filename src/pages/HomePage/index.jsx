@@ -1,82 +1,53 @@
-// import { Button } from "antd";
-// import React from "react";
-// import { $request } from "../../tools";
-// import axios from "axios";
-// import MapContent from "../../components/MapContent";
-// import { useSelector } from "react-redux";
-
-// const HomePage = () => {
-//   const type = useSelector((state) => state.type.type);
-//   return (
-//     <>
-//       <h2>home - useType is {type}</h2>
-//       <Button
-//         onClick={() => {
-//           axios.get("http://jsonplaceholder.typicode.com/posts").then((res) => {
-//             console.log("axios 请求成功", res.data);
-//           });
-
-//           $request
-//             .get("http://jsonplaceholder.typicode.com/posts")
-//             .then((res) => {
-//               console.log("$request 请求成功", res);
-//             });
-//         }}
-//       >
-//         发送请求
-//       </Button>
-//       <MapContent></MapContent>
-//     </>
-//   );
-// };
-
 import React from "react";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import MapContent from "../../components/MapContent";
+import hycxLogo from "../../static/hycxLogo.png";
+import "./index.scss";
 const { Header, Content, Footer } = Layout;
-const items = new Array(3).fill(null).map((_, index) => ({
-  key: index + 1,
-  label: `nav ${index + 1}`
-}));
+
+const items = [
+  { key: 999, label: "线路查询" },
+  { key: 998, label: "攻略查询" },
+  { key: 997, label: "个人中心" }
+];
+
+// 主页
 const HomePage = () => {
   const {
-    token: { colorBgContainer, borderRadiusLG }
+    token: { colorBgContainer, borderRadiusLG, headerBg }
   } = theme.useToken();
   return (
-    <>
+    <div className="home-page">
       <Layout>
         <Header
           style={{
             display: "flex",
-            alignItems: "center"
+            justifyContent: "space-between",
+            backgroundColor: headerBg,
+            borderBottom: "1px solid #f3f3f3" // TODO：需要做设备兼容性处理
           }}
         >
-          <div className="demo-logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-            items={items}
-            style={{
-              flex: 1,
-              minWidth: 0
-            }}
-          />
+          <div className="logo">
+            <img className="logo-img" src={hycxLogo} alt="logo" />
+          </div>
+          <div>
+            <Menu
+              theme="light"
+              mode="horizontal"
+              defaultSelectedKeys={["999"]}
+              items={items}
+              style={{
+                flex: 1,
+                minWidth: 0
+              }}
+            />
+          </div>
         </Header>
         <Content
           style={{
             padding: "0 48px"
           }}
         >
-          <Breadcrumb
-            style={{
-              margin: "16px 0"
-            }}
-          >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
           <div
             style={{
               background: colorBgContainer,
@@ -96,7 +67,7 @@ const HomePage = () => {
           Ant Design ©{new Date().getFullYear()} Created by Ant UED
         </Footer>
       </Layout>
-    </>
+    </div>
   );
 };
 export default HomePage;
