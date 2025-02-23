@@ -1,9 +1,10 @@
 import React from "react";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme, Collapse } from "antd";
 import MapContent from "../../components/MapContent";
 import hycxLogo from "../../static/hycxLogo.png";
 import "./index.scss";
-const { Header, Content, Footer } = Layout;
+import useIsMobileDevice from "../../myHook/useIsMobileDevice";
+const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
   { key: 999, label: "线路查询" },
@@ -16,7 +17,12 @@ const HomePage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG, headerBg }
   } = theme.useToken();
-  return (
+  const isMobileDevice = useIsMobileDevice();
+  return isMobileDevice ? (
+    <>
+      <p>这是移动设备</p>
+    </>
+  ) : (
     <div className="home-page">
       <Layout>
         <Header
@@ -43,29 +49,43 @@ const HomePage = () => {
             />
           </div>
         </Header>
-        <Content
-          style={{
-            padding: "0 48px"
-          }}
-        >
-          <div
+        <Layout>
+          <Sider
+            breakpoint="lg"
+            collapsedWidth="0"
+            width={250}
             style={{
-              background: colorBgContainer,
-              minHeight: 280,
-              padding: 24,
-              borderRadius: borderRadiusLG
+              background: colorBgContainer
+            }}
+          ></Sider>
+          <Layout
+            style={{
+              padding: "0 24px 24px"
             }}
           >
-            <MapContent></MapContent>
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center"
-          }}
-        >
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
+            <Content
+              style={{
+                padding: 24,
+                margin: 0,
+                minHeight: 280,
+                background: colorBgContainer,
+                borderRadius: borderRadiusLG
+              }}
+            >
+              <div className="map-content">
+                <MapContent></MapContent>
+              </div>
+            </Content>
+            <Footer
+              style={{
+                textAlign: "center"
+              }}
+            >
+              Copyright &copy; 2025 Louis. All rights reserved.
+              使用过程中如有任何问题, 请邮箱至2809873625@qq.com.
+            </Footer>
+          </Layout>
+        </Layout>
       </Layout>
     </div>
   );
