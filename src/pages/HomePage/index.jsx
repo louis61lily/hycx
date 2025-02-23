@@ -1,14 +1,15 @@
 import React from "react";
-import { Layout, Menu, theme, Collapse } from "antd";
-import MapContent from "../../components/MapContent";
+import { Layout, Menu, theme } from "antd";
+// import MapContent from "../../components/MapContent";
 import hycxLogo from "../../static/hycxLogo.png";
 import "./index.scss";
 import useIsMobileDevice from "../../myHook/useIsMobileDevice";
+import { Link, Outlet } from "react-router-dom";
 const { Header, Content, Footer, Sider } = Layout;
 
 const items = [
-  { key: 999, label: "线路查询" },
-  { key: 998, label: "攻略查询" },
+  { key: 999, label: "线路查询", path: "" },
+  { key: 998, label: "攻略查询", path: "squery" },
   { key: 997, label: "个人中心" }
 ];
 
@@ -18,6 +19,7 @@ const HomePage = () => {
     token: { colorBgContainer, borderRadiusLG, headerBg }
   } = theme.useToken();
   const isMobileDevice = useIsMobileDevice();
+
   return isMobileDevice ? (
     <>
       <p>这是移动设备</p>
@@ -41,7 +43,12 @@ const HomePage = () => {
               theme="light"
               mode="horizontal"
               defaultSelectedKeys={["999"]}
-              items={items}
+              items={items.map((item) => {
+                return {
+                  key: item.key,
+                  label: <Link to={item?.path}>{item?.label}</Link>
+                };
+              })}
               style={{
                 flex: 1,
                 minWidth: 0
@@ -49,42 +56,33 @@ const HomePage = () => {
             />
           </div>
         </Header>
-        <Layout>
-          <Sider
-            breakpoint="lg"
-            collapsedWidth="0"
-            width={250}
+        <Layout
+          style={{
+            padding: "0 24px 24px"
+          }}
+        >
+          <Content
             style={{
-              background: colorBgContainer
-            }}
-          ></Sider>
-          <Layout
-            style={{
-              padding: "0 24px 24px"
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG
             }}
           >
-            <Content
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280,
-                background: colorBgContainer,
-                borderRadius: borderRadiusLG
-              }}
-            >
-              <div className="map-content">
-                <MapContent></MapContent>
-              </div>
-            </Content>
-            <Footer
-              style={{
-                textAlign: "center"
-              }}
-            >
-              Copyright &copy; 2025 Louis. All rights reserved.
-              使用过程中如有任何问题, 请邮箱至2809873625@qq.com.
-            </Footer>
-          </Layout>
+            <Outlet></Outlet>
+            {/* <div className="map-content">
+              <MapContent></MapContent>
+            </div> */}
+          </Content>
+          <Footer
+            style={{
+              textAlign: "center"
+            }}
+          >
+            Copyright &copy; 2025 Louis. All rights reserved.
+            使用过程中如有任何问题, 请邮箱至2809873625@qq.com.
+          </Footer>
         </Layout>
       </Layout>
     </div>

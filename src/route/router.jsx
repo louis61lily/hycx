@@ -20,7 +20,20 @@ const AppRoutes = () => {
                     ? route.element
                     : route.noTokenElement
                 }
-              />
+              >
+                {route.children &&
+                  route.children.map((childRoute) => (
+                    <Route
+                      key={childRoute._name}
+                      path={childRoute.path}
+                      element={
+                        childRoute?.needToken && token
+                          ? childRoute.element
+                          : childRoute.noTokenElement
+                      }
+                    />
+                  ))}
+              </Route>
             );
           })}
         </Routes>
