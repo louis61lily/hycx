@@ -1,16 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const typeSlice = createSlice({
-  name: "typeStore",
+const userSlice = createSlice({
+  name: "userStore",
   initialState: {
-    type: 0 // 普通用户为0，管理员为1
+    type: 0, // 普通用户为0，管理员为1
+    email: sessionStorage.getItem("email") || "" // 邮箱
   },
   reducers: {
     setType: (state, action) => {
       state.type = action.payload;
+    },
+    setEmail: (state, action) => {
+      state.email = action.payload;
+      sessionStorage.setItem("email", action.payload);
+    },
+    removeEmail: (state) => {
+      state.email = "";
+      sessionStorage.removeItem("email");
     }
   }
 });
 
-export const { setType } = typeSlice.actions;
-export default typeSlice.reducer;
+export const { setType, setEmail, removeEmail } = userSlice.actions;
+export default userSlice.reducer;

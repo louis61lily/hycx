@@ -21,6 +21,7 @@ const AppRoutes = () => {
                     : route.noTokenElement
                 }
               >
+                {/* // 路由嵌套路由时，需要在父页面设置outlet出口确定子路由页面的显示位置 */}
                 {route.children &&
                   route.children.map((childRoute) => (
                     <Route

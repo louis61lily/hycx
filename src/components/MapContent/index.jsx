@@ -31,5 +31,5 @@ export default function MapContainer() {
     };
   }, []);
 
-  return <div id="container" style={{ height: "800px" }}></div>;
+  return <div id="container" style={{ height: "80vh" }}></div>;
 }

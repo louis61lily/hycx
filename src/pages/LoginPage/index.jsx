@@ -7,7 +7,7 @@ import VerifyBtn from "../../components/VerifyBtn";
 import videoFilePath from "../../static/bgcVideo.mp4";
 import iconImg from "../../static/hycxIcon.png";
 import { useDispatch } from "react-redux";
-import { setType } from "../../store/typeStore";
+import { setType, setEmail } from "../../store/typeStore";
 import { setToken } from "../../store/tokenStore";
 
 // 登录页面
@@ -34,6 +34,7 @@ const LoginPage = () => {
         description: "欢迎使用慧引出行!"
       });
       dispatch(setType(res?.type));
+      dispatch(setEmail(form.getFieldValue("email")));
       dispatch(setToken(res?.token));
       navigate("/home");
     } catch (error) {
