@@ -1,5 +1,30 @@
-.container {
+.content-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  .tools {
+    width: 300px; // 固定宽度为 200px
+    min-width: 300px;
+    height: 100%;
+    border-right: 1px solid #f3f3f3;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 5px;
+    .step {
+      width: 100%;
+      height: 25vh;
+      .ant-card-head-title {
+        color: #2fb4ff;
+        font-weight: 800;
+      }
+    }
+  }
+}
+#container {
   padding: 0px;
   margin: 0px;
-  width: 100%;
+  width: calc(100% - 295px); // 自适应剩余宽度
+  flex-grow: 1; // 确保能占据剩余空间
 }

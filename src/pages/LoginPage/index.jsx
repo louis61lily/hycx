@@ -7,7 +7,7 @@ import VerifyBtn from "../../components/VerifyBtn";
 import videoFilePath from "../../static/bgcVideo.mp4";
 import iconImg from "../../static/hycxIcon.png";
 import { useDispatch } from "react-redux";
-import { setType, setEmail } from "../../store/typeStore";
+import { setType, setEmail } from "../../store/userStore";
 import { setToken } from "../../store/tokenStore";
 
 // 登录页面

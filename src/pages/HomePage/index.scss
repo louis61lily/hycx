@@ -8,6 +8,11 @@
     border-bottom: 1px solid #f3f3f3;
     padding: 0 20px;
     .menuBox {
+      .ant-menu-title-content {
+        color: #2fb4ff;
+        font-weight: 500;
+        font-size: 16px;
+      }
       .menu {
         width: 300px;
         flex: 1;

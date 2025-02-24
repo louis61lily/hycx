@@ -4,8 +4,10 @@ import { Layout, Menu, theme } from "antd";
 import hycxLogo from "../../static/hycxLogo.png";
 import "./index.scss";
 import useIsMobileDevice from "../../myHook/useIsMobileDevice";
-import { Link, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { removeToken } from "../../store/tokenStore";
+import { removeEmail } from "../../store/userStore";
 const { Header, Content, Footer } = Layout;
 
 const footerText =
@@ -18,6 +20,8 @@ const HomePage = () => {
   } = theme.useToken();
   const email = useSelector((state) => state.user.email) || "";
   const isMobileDevice = useIsMobileDevice();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const items = [
     {
@@ -33,7 +37,17 @@ const HomePage = () => {
       key: "home3",
       children: [
         {
-          label: "退出登录",
+          label: (
+            <div
+              onClick={() => {
+                dispatch(removeEmail());
+                dispatch(removeToken());
+                navigate("/login");
+              }}
+            >
+              退出登录
+            </div>
+          ),
           key: "home31"
         },
         {

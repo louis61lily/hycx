@@ -1,4 +1,10 @@
 import { useEffect } from "react";
+import { Card } from "antd";
+import {
+  HomeTwoTone,
+  AppstoreTwoTone,
+  ScheduleTwoTone
+} from "@ant-design/icons";
 import "./index.scss";
 import AMapLoader from "@amap/amap-jsapi-loader";
 
@@ -31,5 +37,47 @@ export default function MapContainer() {
     };
   }, []);
 
-  return <div id="container" style={{ height: "80vh" }}></div>;
+  return (
+    <div className="content-box">
+      <div className="tools" style={{ height: "80vh" }}>
+        <div className="step">
+          <Card
+            title={
+              <>
+                <HomeTwoTone twoToneColor="#2fb4ff" /> 出发点与目的地
+              </>
+            }
+            variant="borderless"
+          >
+            Card content
+          </Card>
+        </div>
+        <div className="step">
+          <Card
+            title={
+              <>
+                <AppstoreTwoTone twoToneColor="#2fb4ff" /> 个性化路线选择
+              </>
+            }
+            variant="borderless"
+          >
+            Card content
+          </Card>
+        </div>
+        <div className="step">
+          <Card
+            title={
+              <>
+                <ScheduleTwoTone twoToneColor="#2fb4ff" /> 路径信息总览
+              </>
+            }
+            variant="borderless"
+          >
+            Card content
+          </Card>
+        </div>
+      </div>
+      <div id="container" style={{ height: "80vh" }}></div>
+    </div>
+  );
 }
