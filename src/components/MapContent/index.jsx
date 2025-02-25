@@ -7,6 +7,8 @@ import {
 } from "@ant-design/icons";
 import "./index.scss";
 import AMapLoader from "@amap/amap-jsapi-loader";
+import DepartureAndDestinationBox from "../CardContent/DADBox";
+import PersonalWayBox from "../CardContent/PersonalWayBox";
 
 export default function MapContainer() {
   let map = null;
@@ -44,12 +46,12 @@ export default function MapContainer() {
           <Card
             title={
               <>
-                <HomeTwoTone twoToneColor="#2fb4ff" /> 出发点与目的地
+                <HomeTwoTone twoToneColor="#2fb4ff" /> 出发地与目的地
               </>
             }
             variant="borderless"
           >
-            Card content
+            <DepartureAndDestinationBox></DepartureAndDestinationBox>
           </Card>
         </div>
         <div className="step">
@@ -61,7 +63,7 @@ export default function MapContainer() {
             }
             variant="borderless"
           >
-            Card content
+            <PersonalWayBox></PersonalWayBox>
           </Card>
         </div>
         <div className="step">

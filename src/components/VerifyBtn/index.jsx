@@ -25,7 +25,7 @@ const VerifyBtn = ({
       });
       notification.success({
         message: "验证码发送成功",
-        description: "验证码1分钟内有效，请尽快查收！",
+        description: "验证码3分钟内有效，请尽快查收！",
         duration: 0
       });
     } catch (error) {

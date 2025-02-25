@@ -1,0 +1,17 @@
+.personal-way-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  .policy {
+    width: 50%;
+    border-right: 1px solid #f3f3f3;
+  }
+  .strategy {
+    width: calc(50% - 1px);
+  }
+}
+.radio-item {
+  font-size: 14px;
+}

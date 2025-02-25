@@ -98,6 +98,7 @@ const LoginPage = () => {
               label="验证码"
               name="authCode"
               rules={[{ required: true, message: "请输入验证码!" }]}
+              // TODO: 验证码暴露在了前端网络请求中
             >
               <Row gutter={8}>
                 <Col span={16}>

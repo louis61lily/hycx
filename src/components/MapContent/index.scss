@@ -15,6 +15,9 @@
     .step {
       width: 100%;
       height: 25vh;
+      .ant-card-body {
+        padding: 12px;
+      }
       .ant-card-head-title {
         color: #2fb4ff;
         font-weight: 800;
