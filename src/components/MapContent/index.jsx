@@ -9,6 +9,7 @@ import "./index.scss";
 import AMapLoader from "@amap/amap-jsapi-loader";
 import DepartureAndDestinationBox from "../CardContent/DADBox";
 import PersonalWayBox from "../CardContent/PersonalWayBox";
+import ShowDataBox from "../CardContent/ShowDataBox";
 
 export default function MapContainer() {
   let map = null;
@@ -75,7 +76,7 @@ export default function MapContainer() {
             }
             variant="borderless"
           >
-            Card content
+            <ShowDataBox></ShowDataBox>
           </Card>
         </div>
       </div>

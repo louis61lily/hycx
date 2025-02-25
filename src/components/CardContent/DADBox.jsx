@@ -4,7 +4,7 @@ const DepartureAndDestinationBox = () => {
   const [form] = Form.useForm();
   return (
     <div className="departure-and-destination-box">
-      <Form form={form} layout="vertical">
+      <Form form={form}>
         <Form.Item
           label="出发地"
           name="departure"
