@@ -1,3 +1,18 @@
 .departure-and-destination-box {
   height: 100%;
+  .ant-radio-wrapper {
+    margin-inline-end: 0px;
+  }
+  .radio-item {
+    font-size: 14px;
+  }
+
+  .operator {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .clear {
+      margin-right: 20px;
+    }
+  }
 }

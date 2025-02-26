@@ -1,14 +1,9 @@
 import { useEffect } from "react";
 import { Card } from "antd";
-import {
-  HomeTwoTone,
-  AppstoreTwoTone,
-  ScheduleTwoTone
-} from "@ant-design/icons";
+import { HomeTwoTone, ScheduleTwoTone } from "@ant-design/icons";
 import "./index.scss";
 import AMapLoader from "@amap/amap-jsapi-loader";
 import DepartureAndDestinationBox from "../CardContent/DADBox";
-import PersonalWayBox from "../CardContent/PersonalWayBox";
 import ShowDataBox from "../CardContent/ShowDataBox";
 
 export default function MapContainer() {
@@ -53,18 +48,6 @@ export default function MapContainer() {
             variant="borderless"
           >
             <DepartureAndDestinationBox></DepartureAndDestinationBox>
-          </Card>
-        </div>
-        <div className="step">
-          <Card
-            title={
-              <>
-                <AppstoreTwoTone twoToneColor="#2fb4ff" /> 个性化路线选择
-              </>
-            }
-            variant="borderless"
-          >
-            <PersonalWayBox></PersonalWayBox>
           </Card>
         </div>
         <div className="step">

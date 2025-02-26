@@ -5,7 +5,7 @@ const ShowDataBox = () => {
     <div className="show-data-box">
       <Row>
         <Col span={12}>
-          <Statistic title="预估耗时" />
+          <Statistic title="预估耗时" value={100} />
         </Col>
         <Col span={12}>
           <Statistic title="预估费用" />
