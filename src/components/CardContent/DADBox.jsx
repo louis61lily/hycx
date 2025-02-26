@@ -1,17 +1,23 @@
 import React from "react";
 import { Form, Input, Button, Radio, Select } from "antd";
 import { CarOutlined, UserOutlined, TruckOutlined } from "@ant-design/icons";
+import { $request } from "../../tools";
 
 import "./DADStyle.scss";
 
-const DepartureAndDestinationBox = () => {
+const DepartureAndDestinationBox = ({ setPolyline, setRouteData }) => {
   const [form] = Form.useForm();
 
   const handleSearch = () => {
     form
       .validateFields()
-      .then((values) => {
-        console.log("搜索条件：", values);
+      .then(async (values) => {
+        const res = await $request.post("/getRoute", values);
+        const polyline = res.route?.paths[0]?.steps.flatMap((item) => {
+          return item?.polyline ? item.polyline.split(";") : [];
+        });
+        setPolyline(polyline);
+        setRouteData(res?.route);
       })
       .catch((errorInfo) => {
         console.log("表单验证失败:", errorInfo);
@@ -26,12 +32,12 @@ const DepartureAndDestinationBox = () => {
         layout="vertical"
         initialValues={{
           strategy: "1",
-          way: "1"
+          wayCode: 0
         }}
       >
         <Form.Item
           label="出发地"
-          name="departure"
+          name="origin"
           rules={[
             {
               required: true,
@@ -55,7 +61,7 @@ const DepartureAndDestinationBox = () => {
         </Form.Item>
         <Form.Item
           label="出行方式"
-          name="way"
+          name="wayCode"
           rules={[
             {
               required: true,
@@ -66,7 +72,7 @@ const DepartureAndDestinationBox = () => {
           <Radio.Group
             options={[
               {
-                value: "1",
+                value: 0,
                 label: (
                   <>
                     <CarOutlined /> 驾车
@@ -74,7 +80,7 @@ const DepartureAndDestinationBox = () => {
                 )
               },
               {
-                value: "2",
+                value: 1,
                 label: (
                   <>
                     <UserOutlined /> 步行
@@ -82,7 +88,7 @@ const DepartureAndDestinationBox = () => {
                 )
               },
               {
-                value: "3",
+                value: 2,
                 label: (
                   <>
                     <TruckOutlined /> 公共交通

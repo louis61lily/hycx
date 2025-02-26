@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "antd";
 import { HomeTwoTone, ScheduleTwoTone } from "@ant-design/icons";
 import "./index.scss";
@@ -6,12 +6,25 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 import DepartureAndDestinationBox from "../CardContent/DADBox";
 import ShowDataBox from "../CardContent/ShowDataBox";
 
-export default function MapContainer() {
+window._AMapSecurityConfig = {
+  securityJsCode: "a6454be0dcd13c50c2a4857ee4c5f987"
+};
+
+const MapContainer = () => {
+  const [polyline, setPolyline] = useState([]);
+  const [routeData, setRouteData] = useState({
+    paths: [
+      {
+        duration: 0,
+        distance: 0,
+        tolls: 0
+      }
+    ]
+  });
+
   let map = null;
+
   useEffect(() => {
-    window._AMapSecurityConfig = {
-      securityJsCode: "a6454be0dcd13c50c2a4857ee4c5f987"
-    };
     AMapLoader.load({
       key: "816b14012e975c486ef2f87d6cab1a1d", // 申请好的Web端开发者Key，首次调用 load 时必填
       version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -22,9 +35,32 @@ export default function MapContainer() {
         map = new AMap.Map("container", {
           // 设置地图容器id
           viewMode: "2D", // 是否为3D地图模式
-          zoom: 12, // 初始化地图级别
+          zoom: 15, // 初始化地图级别
           center: [116.397428, 39.90923] // 初始化地图中心点位置
         });
+        if (polyline.length > 0) {
+          const path = polyline.map((item) => {
+            const [lng, lat] = item.split(",");
+            return new AMap.LngLat(lng, lat);
+          });
+
+          map.add(
+            new AMap.Polyline({
+              path: path,
+              strokeColor: "blue",
+              strokeOpacity: 1,
+              strokeWeight: 6
+            })
+          );
+          const originMarker = new AMap.Marker({
+            position: path[0]
+          });
+          const destinationMarker = new AMap.Marker({
+            position: path[path.length - 1]
+          });
+          map.setCenter(path[0]);
+          map.add([originMarker, destinationMarker]);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -33,7 +69,7 @@ export default function MapContainer() {
     return () => {
       map?.destroy();
     };
-  }, []);
+  }, [polyline]);
 
   return (
     <div className="content-box">
@@ -47,7 +83,10 @@ export default function MapContainer() {
             }
             variant="borderless"
           >
-            <DepartureAndDestinationBox></DepartureAndDestinationBox>
+            <DepartureAndDestinationBox
+              setPolyline={setPolyline}
+              setRouteData={setRouteData}
+            ></DepartureAndDestinationBox>
           </Card>
         </div>
         <div className="step">
@@ -59,11 +98,13 @@ export default function MapContainer() {
             }
             variant="borderless"
           >
-            <ShowDataBox></ShowDataBox>
+            <ShowDataBox routeData={routeData}></ShowDataBox>
           </Card>
         </div>
       </div>
       <div id="container" style={{ height: "80vh" }}></div>
     </div>
   );
-}
+};
+
+export default MapContainer;
