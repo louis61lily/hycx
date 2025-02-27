@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card } from "antd";
+import { Card, Col, Row, Drawer, Timeline } from "antd";
 import { HomeTwoTone, ScheduleTwoTone } from "@ant-design/icons";
 import "./index.scss";
 import AMapLoader from "@amap/amap-jsapi-loader";
@@ -12,6 +12,7 @@ window._AMapSecurityConfig = {
 
 const MapContainer = () => {
   const [polyline, setPolyline] = useState([]);
+  const [detailShow, setDetailShow] = useState(false);
   const [routeData, setRouteData] = useState({
     paths: [
       {
@@ -35,8 +36,7 @@ const MapContainer = () => {
         map = new AMap.Map("container", {
           // 设置地图容器id
           viewMode: "2D", // 是否为3D地图模式
-          zoom: 15, // 初始化地图级别
-          center: [116.397428, 39.90923] // 初始化地图中心点位置
+          zoom: 15 // 初始化地图级别
         });
         if (polyline.length > 0) {
           const path = polyline.map((item) => {
@@ -93,7 +93,21 @@ const MapContainer = () => {
           <Card
             title={
               <>
-                <ScheduleTwoTone twoToneColor="#2fb4ff" /> 路径信息总览
+                <Row>
+                  <Col span={20}>
+                    <ScheduleTwoTone twoToneColor="#2fb4ff" /> 路径信息总览
+                  </Col>
+                  <Col>
+                    <div
+                      className="detail"
+                      onClick={() => {
+                        setDetailShow(true);
+                      }}
+                    >
+                      详情
+                    </div>
+                  </Col>
+                </Row>
               </>
             }
             variant="borderless"
@@ -102,6 +116,27 @@ const MapContainer = () => {
           </Card>
         </div>
       </div>
+      <Drawer
+        open={detailShow}
+        onClose={() => setDetailShow(false)}
+        title="路径详情"
+      >
+        <Timeline
+          items={
+            routeData.paths[0]?.steps
+              ? routeData.paths[0]?.steps.map((item, index) => {
+                  return {
+                    children: (
+                      <>
+                        <div key={index}>{item?.instruction}</div>
+                      </>
+                    )
+                  };
+                })
+              : []
+          }
+        />
+      </Drawer>
       <div id="container" style={{ height: "80vh" }}></div>
     </div>
   );

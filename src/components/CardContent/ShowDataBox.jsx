@@ -2,7 +2,7 @@ import { Statistic, Col, Row } from "antd";
 import "./ShowDataBox.scss";
 const ShowDataBox = ({ routeData }) => {
   console.log(routeData, "routeData");
-  const { duration, distance, tolls } = routeData?.paths[0];
+  const { duration = " ", distance = " ", tolls = " " } = routeData?.paths[0];
 
   const formatDuration = (seconds) => {
     const totalMinutes = Math.ceil(seconds / 60);
@@ -32,11 +32,11 @@ const ShowDataBox = ({ routeData }) => {
           />
         </Col>
         <Col span={8}>
-          <Statistic title="预估费用(元)" value={tolls || "-"} />
+          <Statistic title="预估费用" value={tolls + "元" || "-"} />
         </Col>
         <Col span={8}>
           <Statistic
-            title="路线距离（米）"
+            title="路线距离"
             value={distance ? formatDistance(Number(distance)) : "-"}
           />
         </Col>
