@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Layout, Menu, theme } from "antd";
 // import MapContent from "../../components/MapContent";
 import hycxLogo from "../../static/hycxLogo.png";
@@ -22,6 +22,15 @@ const HomePage = () => {
   const isMobileDevice = useIsMobileDevice();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [selectedKey, setSelectedKey] = useState(() => {
+    return localStorage.getItem("selectedMenuKey") || "home1";
+  });
+
+  const handleMenuClick = (e) => {
+    setSelectedKey(e.key);
+    localStorage.setItem("selectedMenuKey", e.key);
+  };
 
   const items = [
     {
@@ -79,7 +88,9 @@ const HomePage = () => {
               className="menu"
               theme="light"
               mode="horizontal"
-              defaultSelectedKeys={["home1"]}
+              defaultSelectedKeys={[selectedKey]}
+              selectedKeys={[selectedKey]}
+              onClick={handleMenuClick}
               items={items}
               style={{
                 justifyContent: "space-between"

@@ -32,7 +32,7 @@ const ShowDataBox = ({ routeData }) => {
           />
         </Col>
         <Col span={8}>
-          <Statistic title="预估费用" value={tolls + "元" || "-"} />
+          <Statistic title="预估费用" value={tolls ? tolls + "元" : "-"} />
         </Col>
         <Col span={8}>
           <Statistic

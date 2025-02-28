@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Row, Drawer, Timeline } from "antd";
+import { Card, Col, Row, Drawer, Timeline, Space, Button } from "antd";
 import { HomeTwoTone, ScheduleTwoTone } from "@ant-design/icons";
 import "./index.scss";
 import AMapLoader from "@amap/amap-jsapi-loader";
 import DepartureAndDestinationBox from "../CardContent/DADBox";
 import ShowDataBox from "../CardContent/ShowDataBox";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 window._AMapSecurityConfig = {
   securityJsCode: "a6454be0dcd13c50c2a4857ee4c5f987"
@@ -71,6 +73,33 @@ const MapContainer = () => {
     };
   }, [polyline]);
 
+  const exportToPDF = async () => {
+    const drawerContent = document.querySelector(".ant-drawer-content");
+    if (drawerContent) {
+      const canvas = await html2canvas(drawerContent);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      let heightLeft = pdfHeight;
+      let position = 0;
+
+      // 添加第一页
+      pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+      heightLeft -= pdf.internal.pageSize.getHeight();
+
+      // 如果内容超出一页，添加更多页
+      while (heightLeft > 0) {
+        pdf.addPage();
+        position -= pdf.internal.pageSize.getHeight();
+        pdf.addImage(imgData, "PNG", 0, position, pdfWidth, pdfHeight);
+        heightLeft -= pdf.internal.pageSize.getHeight();
+      }
+
+      pdf.save("路径详情.pdf");
+    }
+  };
   return (
     <div className="content-box">
       <div className="tools" style={{ height: "80vh" }}>
@@ -120,6 +149,11 @@ const MapContainer = () => {
         open={detailShow}
         onClose={() => setDetailShow(false)}
         title="路径详情"
+        extra={
+          <Space>
+            <Button onClick={exportToPDF}>导出</Button>
+          </Space>
+        }
       >
         <Timeline
           items={

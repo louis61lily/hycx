@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import MapContainer from "../components/MapContent";
+import RouteExperience from "../components/RouteExperience";
 
 const routes = [
   {
@@ -35,7 +36,7 @@ const routes = [
         _name: "child2",
         path: "squery",
         needToken: true,
-        element: <p>线路查询</p>
+        element: <RouteExperience></RouteExperience>
       }
     ]
   },
