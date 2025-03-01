@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Layout, Menu, theme } from "antd";
-// import MapContent from "../../components/MapContent";
 import hycxLogo from "../../static/hycxLogo.png";
 import "./index.scss";
 import useIsMobileDevice from "../../myHook/useIsMobileDevice";
@@ -24,12 +23,12 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const [selectedKey, setSelectedKey] = useState(() => {
-    return localStorage.getItem("selectedMenuKey") || "home1";
+    return sessionStorage.getItem("selectedMenuKey") || "home1";
   });
 
   const handleMenuClick = (e) => {
     setSelectedKey(e.key);
-    localStorage.setItem("selectedMenuKey", e.key);
+    sessionStorage.setItem("selectedMenuKey", e.key);
   };
 
   const items = [
@@ -51,6 +50,7 @@ const HomePage = () => {
               onClick={() => {
                 dispatch(removeEmail());
                 dispatch(removeToken());
+                window.sessionStorage.removeItem("selectedMenuKey");
                 navigate("/login");
               }}
             >
