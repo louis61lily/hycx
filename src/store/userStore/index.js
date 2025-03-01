@@ -3,12 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "userStore",
   initialState: {
-    type: 0, // 普通用户为0，管理员为1
+    type: Number(sessionStorage.getItem("type")) || 0, // 普通用户为0，管理员为1
     email: sessionStorage.getItem("email") || "" // 邮箱
   },
   reducers: {
     setType: (state, action) => {
       state.type = action.payload;
+      sessionStorage.setItem("type", action.payload);
+    },
+    removeType: (state) => {
+      state.type = 0;
+      sessionStorage.removeItem("type");
     },
     setEmail: (state, action) => {
       state.email = action.payload;

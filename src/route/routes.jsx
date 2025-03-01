@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import MapContainer from "../components/MapContent";
 import RouteExperience from "../components/RouteExperience";
+import ExperiencePublish from "../components/ExperiencePublish";
 
 const routes = [
   {
@@ -37,6 +38,12 @@ const routes = [
         path: "squery",
         needToken: true,
         element: <RouteExperience></RouteExperience>
+      },
+      {
+        _name: "child3",
+        path: "publish",
+        needToken: true,
+        element: <ExperiencePublish></ExperiencePublish>
       }
     ]
   },

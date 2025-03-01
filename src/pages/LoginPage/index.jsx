@@ -23,6 +23,10 @@ const LoginPage = () => {
     } catch (error) {
       return;
     }
+    // 检查 sessionStorage 中是否存在 token，如果存在则清除
+    if (sessionStorage.getItem("token")) {
+      sessionStorage.clear();
+    }
     // 登录请求
     try {
       const res = await $request.post("/login", {
@@ -33,7 +37,7 @@ const LoginPage = () => {
         message: "登录成功",
         description: "欢迎使用慧引出行!"
       });
-      dispatch(setType(res?.type));
+      dispatch(setType(res?._type));
       dispatch(setEmail(form.getFieldValue("email")));
       dispatch(setToken(res?.token));
       navigate("/home");

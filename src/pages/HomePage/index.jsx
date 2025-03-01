@@ -18,6 +18,7 @@ const HomePage = () => {
     token: { colorBgContainer, borderRadiusLG, headerBg }
   } = theme.useToken();
   const email = useSelector((state) => state.user.email) || "";
+  const type = useSelector((state) => state.user.type) || 0;
   const isMobileDevice = useIsMobileDevice();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +33,10 @@ const HomePage = () => {
   };
 
   const items = [
+    {
+      label: <Link to="publish">发布攻略</Link>,
+      key: "home-admin"
+    },
     {
       label: <Link to="">线路查询</Link>,
       key: "home1"
@@ -91,10 +96,7 @@ const HomePage = () => {
               defaultSelectedKeys={[selectedKey]}
               selectedKeys={[selectedKey]}
               onClick={handleMenuClick}
-              items={items}
-              style={{
-                justifyContent: "space-between"
-              }}
+              items={type === 1 ? items : items.slice(1)}
             />
           </div>
         </Header>
