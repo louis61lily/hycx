@@ -1,0 +1,13 @@
+.ai-box {
+  .ant-card-head-title {
+    color: #2fb4ff;
+  }
+  .operator {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    .clear {
+      margin-right: 20px;
+    }
+  }
+}

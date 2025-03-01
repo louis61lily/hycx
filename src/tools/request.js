@@ -4,7 +4,7 @@ import axios from "axios";
 // 创建 Axios 实例
 const service = axios.create({
   baseURL: "http://localhost:8080", // 基础 URL
-  timeout: 5000 // 请求超时时间
+  timeout: 30000 // 请求超时时间
 });
 
 // 请求拦截器
