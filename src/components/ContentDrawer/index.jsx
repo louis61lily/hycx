@@ -1,5 +1,7 @@
 import { Drawer } from "antd";
 import "./index.scss";
+
+// 路线详细数据的展示抽屉
 const ContentDrawer = ({ open, data, onClose }) => {
   return (
     <>

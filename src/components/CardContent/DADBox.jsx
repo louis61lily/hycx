@@ -37,10 +37,12 @@ const strategyOptions = {
   ]
 };
 
+// 目的地和出发地查询组件
 const DepartureAndDestinationBox = ({ setPolyline, setRouteData }) => {
   const [form] = Form.useForm();
   const [strategy, setStrategy] = useState("driving");
 
+  // 查询路线
   const handleSearch = () => {
     form
       .validateFields()
@@ -66,6 +68,7 @@ const DepartureAndDestinationBox = ({ setPolyline, setRouteData }) => {
       });
   };
 
+  // 表单值改变时的回调函数
   const handleFormValueChange = (changedValue, allValue) => {
     if (changedValue?.wayCode) {
       form.setFieldsValue({

@@ -4,10 +4,12 @@ import { Button, Form, Input, Card, Popover } from "antd";
 import $request from "../../tools/request";
 import "./index.scss";
 
+// AI攻略部分
 const AIBox = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false); // 添加 loading 状态
 
+  // 查询攻略
   const handleSearch = () => {
     setLoading(true); // 开始请求时设置 loading 为 true
     form

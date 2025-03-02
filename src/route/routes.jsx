@@ -22,7 +22,7 @@ const routes = [
   {
     _name: "home",
     path: "/home",
-    element: <HomePage></HomePage>,
+    element: <HomePage></HomePage>, // 首页
     noTokenElement: <Navigate to={"/login"}></Navigate>,
     needToken: true,
     meta: { requiresAuth: true },
@@ -31,19 +31,19 @@ const routes = [
         _name: "child1",
         path: "",
         needToken: true,
-        element: <MapContainer />
+        element: <MapContainer /> // 地图容器
       },
       {
         _name: "child2",
         path: "squery",
         needToken: true,
-        element: <RouteExperience></RouteExperience>
+        element: <RouteExperience></RouteExperience> // 路线查询
       },
       {
         _name: "child3",
         path: "publish",
         needToken: true,
-        element: <ExperiencePublish></ExperiencePublish>
+        element: <ExperiencePublish></ExperiencePublish> // 路线发布
       }
     ]
   },

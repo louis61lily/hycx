@@ -1,9 +1,12 @@
 import { Statistic, Col, Row } from "antd";
 import "./ShowDataBox.scss";
+
+// 展示数据组件
 const ShowDataBox = ({ routeData }) => {
   console.log(routeData, "routeData");
   const { duration = " ", distance = " ", tolls = " " } = routeData?.paths[0];
 
+  // 格式化时间
   const formatDuration = (seconds) => {
     const totalMinutes = Math.ceil(seconds / 60);
     const hours = Math.floor(totalMinutes / 60);
@@ -15,6 +18,7 @@ const ShowDataBox = ({ routeData }) => {
     return `${minutes} 分钟`;
   };
 
+  // 格式化距离
   const formatDistance = (meters) => {
     if (meters < 1000) {
       return `${meters} 米`;

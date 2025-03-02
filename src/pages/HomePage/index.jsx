@@ -17,21 +17,23 @@ const HomePage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG, headerBg }
   } = theme.useToken();
-  const email = useSelector((state) => state.user.email) || "";
-  const type = useSelector((state) => state.user.type) || 0;
-  const isMobileDevice = useIsMobileDevice();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const email = useSelector((state) => state.user.email) || ""; // 获取用户邮箱
+  const type = useSelector((state) => state.user.type) || 0; // 获取用户类型
+  const isMobileDevice = useIsMobileDevice(); // 判断是否为移动设备
+  const dispatch = useDispatch(); // 获取dispatch
+  const navigate = useNavigate(); // 获取navigate
 
   const [selectedKey, setSelectedKey] = useState(() => {
     return sessionStorage.getItem("selectedMenuKey") || "home1";
-  });
+  }); // 获取选中的菜单键避免用户刷新页面menu更新
 
+  //  菜单点击事件
   const handleMenuClick = (e) => {
     setSelectedKey(e.key);
     sessionStorage.setItem("selectedMenuKey", e.key);
   };
 
+  // 菜单项
   const items = [
     {
       label: <Link to="publish">操作攻略</Link>,

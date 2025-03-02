@@ -12,6 +12,7 @@ window._AMapSecurityConfig = {
   securityJsCode: "a6454be0dcd13c50c2a4857ee4c5f987"
 };
 
+// 首页地图容器
 const MapContainer = () => {
   const [polyline, setPolyline] = useState([]);
   const [detailShow, setDetailShow] = useState(false);
@@ -73,6 +74,7 @@ const MapContainer = () => {
     };
   }, [polyline]);
 
+  // 导出PDF
   const exportToPDF = async () => {
     const drawerContent = document.querySelector(".ant-drawer-content");
     if (drawerContent) {

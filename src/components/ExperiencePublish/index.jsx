@@ -7,15 +7,15 @@ import "./index.scss";
 
 // 发布攻略
 const ExperiencePublish = () => {
-  const [publishModalShow, setPublishModalShow] = useState(false);
-  const [deleteModalShow, setDeleteModalShow] = useState(false);
-  const [updateModalShow, setUpdateModalShow] = useState(false);
-  const publishFormRef = useRef(null);
-  const deleteFormRef = useRef(null);
-  const updateFormRef = useRef(null);
+  const [publishModalShow, setPublishModalShow] = useState(false); // 发布攻略模态框是否显示
+  const [deleteModalShow, setDeleteModalShow] = useState(false); // 删除攻略模态框是否显示
+  const [updateModalShow, setUpdateModalShow] = useState(false); // 更新攻略模态框是否显示
+  const publishFormRef = useRef(null); // 发布攻略表单ref
+  const deleteFormRef = useRef(null); // 删除攻略表单ref
+  const updateFormRef = useRef(null); // 更新攻略表单ref
 
-  const [experienceList, setExperienceData] = useState([]);
-  const experienceItemRef = useRef({});
+  const [experienceList, setExperienceData] = useState([]); // 攻略列表
+  const experienceItemRef = useRef({}); // 暂存单个攻略详情
 
   // 获取所有攻略
   const getExperience = async () => {

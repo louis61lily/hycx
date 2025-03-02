@@ -2,6 +2,7 @@ import { useLocation, Navigate } from "react-router-dom";
 import routes from "./routes";
 import { isAuthenticated } from "../tools";
 
+// 路由守卫
 const RouteGuard = ({ children }) => {
   const location = useLocation();
   const currentRoute = routes.find((route) => route.path === location.pathname);
