@@ -34,7 +34,7 @@ const HomePage = () => {
 
   const items = [
     {
-      label: <Link to="publish">发布攻略</Link>,
+      label: <Link to="publish">操作攻略</Link>,
       key: "home-admin"
     },
     {
