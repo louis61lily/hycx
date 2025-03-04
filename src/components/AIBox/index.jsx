@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { QuestionCircleTwoTone } from "@ant-design/icons";
-import { Button, Form, Input, Card, Popover } from "antd";
+import { Button, Form, Modal, Input, Card, Popover } from "antd";
 import $request from "../../tools/request";
 import "./index.scss";
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm"; // 支持 GitHub Flavored Markdown
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 // AI攻略部分
 const AIBox = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false); // 添加 loading 状态
+  const [modalVisible, setModalVisible] = useState(false); // 添加 modal 状态
+  const [result, setResult] = useState(""); // 添加 result 状态
 
   // 查询攻略
   const handleSearch = () => {
@@ -19,6 +25,10 @@ const AIBox = () => {
         try {
           const res = await $request.post("/ai", values);
           console.log(res);
+          if (res.length > 0) {
+            setModalVisible(true);
+            setResult(res[0].message?.content);
+          }
         } catch (error) {
           console.log(error);
         } finally {
@@ -30,6 +40,22 @@ const AIBox = () => {
         setLoading(false); // 验证失败时设置 loading 为 false
       });
   };
+
+  // 导出为 PDF
+  const exportToPDF = async () => {
+    const modalContent = document.querySelector(".result");
+    if (modalContent) {
+      const canvas = await html2canvas(modalContent);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+      pdf.save("AI攻略查询结果.pdf");
+    }
+  };
+
   return (
     <>
       <div className="ai-box">
@@ -87,6 +113,82 @@ const AIBox = () => {
             </Button>
           </div>
         </Card>
+        <Modal
+          open={modalVisible}
+          title="AI攻略查询结果"
+          okText="导出"
+          cancelText="关闭"
+          onCancel={() => setModalVisible(false)}
+          onOk={exportToPDF}
+        >
+          <div className="result">
+            <ReactMarkdown
+              remarkPlugins={[gfm]}
+              components={{
+                h1: ({ children }) => (
+                  <h1
+                    style={{
+                      fontSize: "24px",
+                      fontWeight: "bold",
+                      marginBottom: "10px"
+                    }}
+                  >
+                    {children}
+                  </h1>
+                ),
+                h2: ({ children }) => (
+                  <h2
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: "bold",
+                      marginBottom: "8px"
+                    }}
+                  >
+                    {children}
+                  </h2>
+                ),
+                h3: ({ children }) => (
+                  <h3
+                    style={{
+                      fontSize: "18px",
+                      fontWeight: "bold",
+                      marginBottom: "6px"
+                    }}
+                  >
+                    {children}
+                  </h3>
+                ),
+                ul: ({ children }) => (
+                  <ul
+                    style={{
+                      listStyleType: "disc",
+                      marginLeft: "20px",
+                      marginBottom: "10px"
+                    }}
+                  >
+                    {children}
+                  </ul>
+                ),
+                ol: ({ children }) => (
+                  <ol
+                    style={{
+                      listStyleType: "decimal",
+                      marginLeft: "20px",
+                      marginBottom: "10px"
+                    }}
+                  >
+                    {children}
+                  </ol>
+                ),
+                li: ({ children }) => (
+                  <li style={{ marginBottom: "5px" }}>{children}</li>
+                )
+              }}
+            >
+              {result}
+            </ReactMarkdown>
+          </div>
+        </Modal>
       </div>
     </>
   );
