@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { QuestionCircleTwoTone } from "@ant-design/icons";
-import { Button, Form, Modal, Input, Card, Popover } from "antd";
+import { Button, Form, Modal, Input, Card, Popover, Radio } from "antd";
 import $request from "../../tools/request";
 import "./index.scss";
 import ReactMarkdown from "react-markdown";
@@ -94,14 +94,38 @@ const AIBox = () => {
             >
               <Input placeholder="请输入目的地" />
             </Form.Item>
+            <Form.Item
+              label="攻略类别"
+              name="type"
+              rules={[
+                {
+                  required: true,
+                  message: "类别不能为空！"
+                }
+              ]}
+            >
+              <Radio.Group
+                options={[
+                  {
+                    value: "交通",
+                    label: <>交通攻略</>
+                  },
+                  {
+                    value: "旅游",
+                    label: <>旅游攻略</>
+                  }
+                ]}
+              />
+            </Form.Item>
           </Form>
           <div className="operator">
             <div className="clear">
               <Button
                 onClick={() => {
                   form.setFieldsValue({
-                    origin: "",
-                    destination: ""
+                    departure: "",
+                    destination: "",
+                    type: ""
                   });
                 }}
               >

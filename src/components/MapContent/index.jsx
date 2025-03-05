@@ -152,9 +152,11 @@ const MapContainer = () => {
         onClose={() => setDetailShow(false)}
         title="路径详情"
         extra={
-          <Space>
-            <Button onClick={exportToPDF}>导出</Button>
-          </Space>
+          routeData.paths[0]?.steps && (
+            <Space>
+              <Button onClick={exportToPDF}>导出</Button>
+            </Space>
+          )
         }
       >
         <Timeline

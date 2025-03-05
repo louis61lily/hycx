@@ -32,5 +32,15 @@
         }
       }
     }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .tool-zone {
+        display: flex;
+        align-items: center;
+      }
+    }
   }
 }

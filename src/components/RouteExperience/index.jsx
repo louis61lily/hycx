@@ -1,9 +1,10 @@
-import { List, Row } from "antd";
+import { List, Row, Input, Pagination } from "antd";
 import { $request } from "../../tools";
 import { useEffect, useState, useRef } from "react";
 import ContentDrawer from "../ContentDrawer";
 import AIBox from "../AIBox";
 import "./index.scss";
+const { Search } = Input;
 
 // 辅助函数：将13位时间戳转换为YYYY-MM-dd hh:mm格式
 const formatTimestamp = (timestamp) => {
@@ -16,19 +17,60 @@ const formatTimestamp = (timestamp) => {
   return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
+// 攻略部分
 const RouteExperience = () => {
   const [experienceList, setExperienceData] = useState([]);
   const [experienceDrawerShow, setExperienceDrawerShow] = useState(false);
   const experienceItemRef = useRef({});
 
-  const getExperience = async () => {
-    const res = await $request.get("/experience");
-    console.log(res);
+  // 分页处理
+  const [page, setPage] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0
+  });
 
+  // 分页查询接口
+  const getExperienceByPage = async (page, pageSize) => {
+    const res = await $request.post("/experience/page", {
+      page: page,
+      pageSize: pageSize
+    });
+
+    setExperienceData(res?.data);
+    // 更新总页数
+    setPage((pre) => {
+      return {
+        ...pre,
+        total: res?.total
+      };
+    });
+    console.log(res);
+  };
+
+  //  页码变化时的回调
+  const onChange = (cur, pageSize) => {
+    setPage((pre) => {
+      return {
+        ...pre,
+        current: cur
+      };
+    });
+    getExperienceByPage(cur, pageSize);
+  };
+
+  // 查询接口
+  const onSearch = async (value, _e, info) => {
+    const res = await $request.post("/experience/search", {
+      keyword: value
+    });
     setExperienceData(res);
   };
+
+  //  初始化调用
   useEffect(() => {
-    getExperience();
+    getExperienceByPage(page.current, page.pageSize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -37,9 +79,34 @@ const RouteExperience = () => {
         <AIBox></AIBox>
       </div>
       <div className="content">
-        <h1 style={{ marginBottom: "10px", color: "#2fb4ff" }}>
-          热门出行攻略大推荐
-        </h1>
+        <div className="toolbar">
+          <span
+            style={{
+              marginBottom: "10px",
+              color: "#2fb4ff",
+              fontSize: "28px",
+              fontWeight: 800
+            }}
+          >
+            热门攻略大推荐
+          </span>
+          <div className="tool-zone">
+            <Search
+              placeholder="输入关键字搜索相关攻略"
+              onSearch={onSearch}
+              style={{
+                width: 250
+              }}
+            />
+            <Pagination
+              onChange={onChange}
+              current={page.current}
+              pageSize={page.pageSize}
+              total={page.total}
+              responsive={true}
+            />
+          </div>
+        </div>
         <List
           itemLayout="horizontal"
           bordered
