@@ -125,11 +125,11 @@ const LoginPage = () => {
             </Form.Item>
           </Form>
         </div>
-      </div>
-      <div>
-        <p className="copyright">
-          Copyright &copy; 2025 Louis. All rights reserved.
-        </p>
+        <div>
+          <p className="copyright">
+            Copyright &copy; 2025 Louis. All rights reserved.
+          </p>
+        </div>
       </div>
     </>
   );

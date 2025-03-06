@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout, Menu, theme } from "antd";
 import hycxLogo from "../../static/hycxLogo.png";
 import "./index.scss";
-import useIsMobileDevice from "../../myHook/useIsMobileDevice";
+// import useIsMobileDevice from "../../myHook/useIsMobileDevice";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { removeToken } from "../../store/tokenStore";
@@ -19,7 +19,7 @@ const HomePage = () => {
   } = theme.useToken();
   const email = useSelector((state) => state.user.email) || ""; // 获取用户邮箱
   const type = useSelector((state) => state.user.type) || 0; // 获取用户类型
-  const isMobileDevice = useIsMobileDevice(); // 判断是否为移动设备
+  // const isMobileDevice = useIsMobileDevice(); // 判断是否为移动设备
   const dispatch = useDispatch(); // 获取dispatch
   const navigate = useNavigate(); // 获取navigate
 
@@ -74,11 +74,7 @@ const HomePage = () => {
       ]
     }
   ];
-  return isMobileDevice ? (
-    <>
-      <p>这是移动设备</p>
-    </>
-  ) : (
+  return (
     <div className="home-page">
       <Layout className="layout">
         <Header

@@ -9,7 +9,6 @@ const RouteGuard = ({ children }) => {
   if (currentRoute?.meta?.requiresAuth && !isAuthenticated("admin")) {
     return <Navigate to="/login" />;
   }
-
   return children;
 };
 
