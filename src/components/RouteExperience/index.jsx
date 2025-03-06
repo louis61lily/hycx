@@ -92,7 +92,7 @@ const RouteExperience = () => {
           </span>
           <div className="tool-zone">
             <Search
-              placeholder="输入关键字搜索相关攻略"
+              placeholder="输入城市名搜索相关攻略"
               onSearch={onSearch}
               style={{
                 width: 250
