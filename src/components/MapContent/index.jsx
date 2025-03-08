@@ -134,6 +134,7 @@ const MapContainer = () => {
                       onClick={() => {
                         setDetailShow(true);
                       }}
+                      style={{ cursor: "pointer" }}
                     >
                       详情
                     </div>

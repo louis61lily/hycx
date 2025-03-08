@@ -4,7 +4,7 @@ import "./ShowDataBox.scss";
 // 展示数据组件
 const ShowDataBox = ({ routeData }) => {
   console.log(routeData, "routeData");
-  const { duration = " ", distance = " ", tolls = " " } = routeData?.paths[0];
+  const { duration = " ", distance = " ", tolls = 0 } = routeData?.paths[0];
 
   // 格式化时间
   const formatDuration = (seconds) => {

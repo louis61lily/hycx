@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button, notification } from "antd";
 import axios from "axios";
 
+// const requestUrl = "http://1.14.64.23:8080/verify";
 const requestUrl = "http://localhost:8080/verify";
 // 验证码按钮组件
 const VerifyBtn = ({
