@@ -41,6 +41,19 @@ const MapContainer = () => {
           viewMode: "2D", // 是否为3D地图模式
           zoom: 15 // 初始化地图级别
         });
+        AMap.plugin("AMap.AutoComplete", function () {
+          var autoDepartureOptions = {
+            input: "departure_input"
+          };
+          new AMap.AutoComplete(autoDepartureOptions);
+        });
+        AMap.plugin("AMap.AutoComplete", function () {
+          var autoDestinationOptions = {
+            input: "destination_input"
+          };
+          new AMap.AutoComplete(autoDestinationOptions);
+        });
+
         if (polyline.length > 0) {
           const path = polyline.map((item) => {
             const [lng, lat] = item.split(",");

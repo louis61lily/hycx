@@ -106,7 +106,7 @@ const DepartureAndDestinationBox = ({ setPolyline, setRouteData }) => {
             }
           ]}
         >
-          <Input placeholder="请输入出发地" />
+          <Input id="departure_input" placeholder="请输入出发地" />
         </Form.Item>
         <Form.Item
           label="目的地"
@@ -118,7 +118,7 @@ const DepartureAndDestinationBox = ({ setPolyline, setRouteData }) => {
             }
           ]}
         >
-          <Input placeholder="请输入目的地" />
+          <Input id="destination_input" placeholder="请输入目的地" />
         </Form.Item>
         <Form.Item
           label="出行方式"
